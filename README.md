@@ -36,13 +36,13 @@ Google=YOUR_GOOGLE_API_KEY_HERE
 Groq=YOUR_GROQ_API_KEY_HERE
 ```
 
-**⚠️ Important:** This file is in `.gitignore` and will not be committed. Never share it in the repository!
+**⚠️ Important:** This file is in `.gitignore` and will not be committed. Never share it in a public repository or space!
 
 ### 3. Build and Install App
 
 ```bash
 # Clone project (if not already done)
-git clone <repository-url>
+git clone https://github.com/Sergey842248/WatchAI
 cd WatchAI
 
 # Load dependencies and build
@@ -58,13 +58,7 @@ cd WatchAI
 1. Open the WatchAI app on your Wear OS watch
 2. Select your preferred AI provider (Google or Groq)
 3. Select a model from the available list
-4. For Groq: Enter your API key (if not already configured in the file)
 
-### Using Chat
-1. Tap on the text field
-2. Enter your question/command
-3. Tap "Send"
-4. The AI response appears automatically
 
 ## 🔧 Available Providers & Models
 
@@ -73,15 +67,15 @@ cd WatchAI
 - **gemini-2.5-pro**: More advanced model
 
 ### Groq
-- **llama3-8b-8192**: Balanced performance
-- **llama3-70b-8192**: High-performance model
-- **mixtral-8x7b-32768**: Mixtral model with good speed
+- **qwen/qwen3-32b**: Balanced performance
+- **openai/gpt-oss-120b**: High-performance model
+- **meta-llama/llama-4-scout-17b-16e-instruct**: Mixtral model with good speed
 
 ## 🔐 Security
 
 - API keys are stored locally on the device
 - The `apikeys.properties` file is excluded from Git
-- Runtime API key input possible through the app interface
+- Runtime API key input not possible through the app interface
 - No data is sent to third parties (except to the respective AI providers)
 
 ## 🛠️ Development
@@ -110,20 +104,12 @@ app/src/main/assets/
 
 If you want to develop new features, add dependencies in `gradle/libs.versions.toml`:
 
-```toml
-[versions]
-my_lib = "1.0.0"
-
-[libraries]
-my_lib = { group = "com.example", name = "lib", version.ref = "my_lib" }
-```
 
 ## 🔍 Troubleshooting
 
 ### "No response generated" Error
 - Check your API keys in `apikeys.properties`
 - Make sure your device has internet access
-- For Groq: Verify that the key is active
 
 ### Provider/Model not displayed
 - Restart the app
@@ -144,11 +130,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🤝 Contributing
 
-1. Fork the project
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+- Open a Pull Request
 
 ## 🙋 Support
 
@@ -156,11 +138,3 @@ For questions or problems:
 1. Check this README
 2. Search the GitHub Issues
 3. Open a new issue if necessary
-
-## 📝 Changelog
-
-### v1.0.0
-- Initial release
-- Support for Google Gemini and Groq
-- Wear OS optimized UI
-- Secure API key management
