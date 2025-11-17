@@ -72,10 +72,17 @@ fun WearApp(context: android.content.Context = androidx.compose.ui.platform.Loca
 
     val scrollState = rememberScrollState()
 
+    LaunchedEffect(response) {
+        if (response.isNotEmpty()) {
+            scrollState.animateScrollTo(scrollState.maxValue.toInt())
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 24.dp)
+            .padding(bottom = 28.dp)
             .verticalScroll(scrollState),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -209,11 +216,19 @@ fun WearApp(context: android.content.Context = androidx.compose.ui.platform.Loca
         }
 
         if (response.isNotEmpty()) {
-            Text(
-                text = response,
-                style = MaterialTheme.typography.body2,
-                modifier = Modifier.fillMaxWidth()
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .heightIn(max = 200.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Text(
+                    text = response,
+                    style = MaterialTheme.typography.body2,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }
