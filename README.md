@@ -67,9 +67,9 @@ cd WatchAI
 - **gemini-2.5-pro**: More advanced model
 
 ### Groq
-- **qwen/qwen3-32b**: Balanced performance
 - **openai/gpt-oss-120b**: High-performance model
-- **meta-llama/llama-4-scout-17b-16e-instruct**: Mixtral model with good speed
+- **meta-llama/llama-4-scout-17b-16e-instruct**: Open-Source model with good speed
+- **qwen/qwen3-32b**: Thinking model
 
 ## 🔐 Security
 
