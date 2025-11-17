@@ -17,7 +17,7 @@ class GoogleAIProvider(
             val result = generativeModel.generateContent(prompt)
             result.text ?: "No response generated"
         } catch (e: Exception) {
-            "Error: ${e.message}"
+            "Error: ${e.message ?: "Unknown error"}"
         }
     }
 }

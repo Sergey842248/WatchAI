@@ -1,6 +1,8 @@
 package com.future.watchai.data
 
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -35,6 +37,16 @@ class GroqAIProvider(
         val content: String
     )
 
+    data class GroqErrorResponse(
+        val error: ErrorDetails
+    )
+
+    data class ErrorDetails(
+        val message: String,
+        val type: String?,
+        val code: String?
+    )
+
     override suspend fun generateContent(prompt: String): String {
         if (apiKey.isBlank()) {
             return "Error: Groq API key not provided"
@@ -55,19 +67,37 @@ class GroqAIProvider(
                 .addHeader("Content-Type", "application/json")
                 .build()
 
-            val response = client.newCall(request).execute()
+            val response = withContext(Dispatchers.IO) {
+                client.newCall(request).execute()
+            }
 
             if (response.isSuccessful) {
                 val responseBody = response.body?.string()
-                val groqResponse = gson.fromJson(responseBody, GroqResponse::class.java)
-                groqResponse.choices.firstOrNull()?.message?.content ?: "No response generated"
+                if (responseBody.isNullOrEmpty()) {
+                    return "Error: No response from server"
+                }
+                try {
+                    val groqResponse = gson.fromJson(responseBody, GroqResponse::class.java)
+                    groqResponse.choices.firstOrNull()?.message?.content ?: "No response generated"
+                } catch (e: Exception) {
+                    "Error: Failed to parse response - ${e.message ?: "Unknown parsing error"}"
+                }
             } else {
-                "Error: ${response.message} (Code: ${response.code})"
+                val errorBody = response.body?.string()
+                if (!errorBody.isNullOrEmpty()) {
+                    try {
+                        val errorResp = gson.fromJson(errorBody, GroqErrorResponse::class.java)
+                        return "Error: ${errorResp.error.message}"
+                    } catch (e: Exception) {
+                        // Fallback to generic message
+                    }
+                }
+                "Error: ${response.message.ifBlank { "Unknown server error" }} (Code: ${response.code})"
             }
         } catch (e: IOException) {
-            "Error: Network request failed - ${e.message}"
+            "Error: Network request failed - ${e.message ?: "No details"}"
         } catch (e: Exception) {
-            "Error: ${e.message}"
+            "Error: ${e.message ?: "Unknown error"}"
         }
     }
 }

@@ -17,8 +17,8 @@ object Constants {
     )
 
     val GROQ_MODELS = listOf(
-        "llama3-8b-8192",
-        "llama3-70b-8192",
-        "mixtral-8x7b-32768"
+        "openai/gpt-oss-120b",
+        "meta-llama/llama-4-scout-17b-16e-instruct",
+        "qwen/qwen3-32b"
     )
 }
