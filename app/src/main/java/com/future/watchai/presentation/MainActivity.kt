@@ -10,14 +10,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.TextField
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.*
+import androidx.wear.compose.material.ScalingLazyColumn
+import androidx.wear.compose.material.TimeText
+import androidx.wear.compose.material.Chip
+import androidx.wear.compose.material.CompactChip
+import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.Button
+import androidx.wear.compose.material.MaterialTheme
 import com.future.watchai.data.*
 import kotlinx.coroutines.launch
 
@@ -140,7 +146,7 @@ fun WearApp(context: android.content.Context = androidx.compose.ui.platform.Loca
         }
 
         item {
-            TextField(
+            OutlinedTextField(
                 value = input,
                 onValueChange = { input = it },
                 placeholder = { Text("Enter your command") },
